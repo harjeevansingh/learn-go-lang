@@ -14,7 +14,7 @@ func main()  {
 	fmt.Println("Fruit list is: ", fruitList)
 	fmt.Println("Fruit list length is: ", len(fruitList))
 
-	var vegList = [3]string{"Potato", "beans", "Tomato"}
+	var vegList = [3 ]string{"Potato", "beans", "Tomato"}
 	fmt.Println("Veg list is: ", vegList)
 	fmt.Println("Veg list length is: ", len(vegList))
 }
