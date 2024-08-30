@@ -27,5 +27,5 @@ func greeter()  {
 
 func serveHome(w http.ResponseWriter, r *http.Request)  {
 	fmt.Fprintf(w, "Welcome to the home page")
-	w.Write([]byte("Welcome to the home page"))
+	w.Write([]byte("<h1>Welcome to the home page</h1>"))
 }
