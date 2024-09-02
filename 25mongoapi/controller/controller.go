@@ -16,19 +16,18 @@ const connectionString = "mongodb+srv://harjeevansingh01:qwerty1234@go-learn.fzc
 const dbName = "netflix"
 const collectionName = "movies"
 
-
 // Most Important
 var collection *mongo.Collection
 
 // Connect to MongoDB
-func init(){
+func init() {
 	// client option
 	clientOption := options.Client().ApplyURI(connectionString)
 
 	// Connect to MongoDB
 	client, err := mongo.Connect(context.TODO(), clientOption)
 
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Connected to MongoDB")
@@ -41,27 +40,49 @@ func init(){
 
 // MongoDB Helpers - file
 
-
 // Insert one record
-func insertOneMovie(movie model.Netflix){
+func insertOneMovie(movie model.Netflix) {
 	inserted, err := collection.InsertOne(context.Background(), movie)
 
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Inserted one movie with ID:", inserted.InsertedID)
 }
 
 // Update one record
-func updateOneMovie(movieId string){
+func updateOneMovie(movieId string) {
 	id, _ := primitive.ObjectIDFromHex(movieId)
 	filter := bson.M{"_id": id}
 	update := bson.M{"$set": bson.M{"watched": true}}
 
 	result, err := collection.UpdateOne(context.Background(), filter, update)
 
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Updated count:", result.ModifiedCount)
+}
+
+// Delete one record
+func deleteOneMovie(movieId string) {
+	id, _ := primitive.ObjectIDFromHex(movieId)
+	filter := bson.M{"_id": id}
+	delectCount, err := collection.DeleteOne(context.Background(), filter)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Deleted count:", delectCount.DeletedCount)
+}
+
+// Delete all records
+func deleteAllMovies() int64 {
+	deletedResult, err := collection.DeleteMany(context.Background(), bson.M{})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Deleted count:", deletedResult.DeletedCount)
+	return deletedResult.DeletedCount
 }
