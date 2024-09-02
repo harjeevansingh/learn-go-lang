@@ -33,7 +33,23 @@ func (c *Course) isEmpty() bool {
 }
 
 func main() {
+	fmt.Println("Api code with Harjeevan")
+	r := mux.NewRouter()
 
+	// seeding 
+	courses = append(courses, Course{CourseId: "1", CourseName: "React", CoursePrice: 100, Author: &Author{FullName: "Harjeevan Singh", Website: "https://harjeevan.com"}})
+	courses = append(courses, Course{CourseId: "2", CourseName: "Node", CoursePrice: 200, Author: &Author{FullName: "Akshay Kumar", Website: "https://akshay.com"}})
+
+	// Routing
+	r.HandleFunc("/", serveHome).Methods("GET")
+	r.HandleFunc("/courses", getAllCourses).Methods("GET")
+	r.HandleFunc("/courses/{id}", getOneCourse).Methods("GET")
+	r.HandleFunc("/course", createOneCourse).Methods("POST")
+	r.HandleFunc("/courses/{id}", updateOneCourse).Methods("PUT")
+	r.HandleFunc("/courses/{id}", deleteOneCourse).Methods("DELETE")
+
+	// Listen and serve
+	http.ListenAndServe(":4000", r)
 }
 
 // Controllers - file
