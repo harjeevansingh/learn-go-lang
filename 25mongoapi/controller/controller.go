@@ -114,13 +114,13 @@ func getAllMovies() []primitive.M {
 
 // Actual controller - file
 
-func GetMyAllMovies(w http.ResponseWriter, r http.Request) {
+func GetMyAllMovies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	allMovies := getAllMovies()
 	json.NewEncoder(w).Encode(allMovies)
 }
 
-func CreateMovie(w http.ResponseWriter, r http.Request) {
+func CreateMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Allow-Control-Allow-Origin", "POST")
 
@@ -141,7 +141,7 @@ func MarkAsWatched(w http.ResponseWriter, r *http.Request) {
 
 func DeleteMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
-	w.Header().Set("Allow-Control-Allow-Origin", "POST")
+	w.Header().Set("Allow-Control-Allow-Origin", "DELETE")
 
 	params := mux.Vars(r)
 	deleteOneMovie(params["id"])
